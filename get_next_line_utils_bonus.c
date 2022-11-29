@@ -99,7 +99,6 @@ char	*read_line(t_crs *crs)
 	int		n_line;
 
 	line = NULL;
-	n_line = 1;
 	while (1)
 	{
 		if (! fill_buffer(crs))

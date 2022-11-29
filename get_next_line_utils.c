@@ -10,9 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include<unistd.h>
-#include<stdlib.h>
-#include<stddef.h>
 #include "get_next_line.h"
 
 t_crs	*allocate_cursor(int fd)
@@ -89,7 +86,7 @@ int	fill_buffer(t_crs *crs)
 		crs->eof = chars_read == 0;
 		crs->buffer[chars_read] = '\0';
 		crs->pos = 0;
-		crs->reload = ! (chars_read > 0);
+		crs->reload = chars_read <= 0;
 	}
 	return (1);
 }
@@ -101,7 +98,6 @@ char	*read_line(t_crs *crs)
 	int		n_line;
 
 	line = NULL;
-	n_line = 1;
 	while (1)
 	{
 		if (! fill_buffer(crs))

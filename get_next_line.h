@@ -18,10 +18,6 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-# ifndef BUFFER_SIZE 2147483648
-#  define BUFFER_SIZE 2147483647
-# endif
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
