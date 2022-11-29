@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   get_next_line_utils.c                              :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: anonymous <anonymous@student.codam.nl>       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/10/19 01:19:27 by anonymous     #+#    #+#                 */
-/*   Updated: 2022/11/04 12:30:38 by faru          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fra <fra@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/19 01:19:27 by anonymous         #+#    #+#             */
+/*   Updated: 2022/11/30 00:52:21 by fra              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ t_crs	*allocate_cursor(int fd)
 		crs = NULL;
 		return (NULL);
 	}
-	crs->pos = 0;
 	crs->fd = fd;
+	crs->pos = 0;
 	crs->eof = 0;
 	crs->reload = 1;
 	return (crs);
@@ -58,7 +58,7 @@ char	*append_str(char *old, t_crs *crs, size_t start)
 			len_old++;
 	}
 	len_right = crs->pos - start;
-	if (! (len_old + len_right))
+	if (! len_right)
 		return (NULL);
 	new_str = (char *) malloc((len_old + len_right + 1) * sizeof(char));
 	if (new_str)
@@ -77,16 +77,16 @@ char	*append_str(char *old, t_crs *crs, size_t start)
 int	fill_buffer(t_crs *crs)
 {
 	ssize_t	chars_read;
-	
+
 	if (crs->reload)
 	{
 		chars_read = read(crs->fd, crs->buffer, BUFFER_SIZE);
-		if (chars_read < 0 || crs->eof)
+		if (chars_read == -1 || crs->eof)
 			return (0);
 		crs->eof = chars_read == 0;
+		crs->reload = crs->eof;
 		crs->buffer[chars_read] = '\0';
 		crs->pos = 0;
-		crs->reload = chars_read <= 0;
 	}
 	return (1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                        ::::::::            */
-/*   get_next_line_utils_bonus.c                        :+:    :+:            */
-/*                                                     +:+                    */
-/*   By: anonymous <anonymous@student.codam.nl>       +#+                     */
-/*                                                   +#+                      */
-/*   Created: 2022/10/25 03:04:19 by anonymous     #+#    #+#                 */
-/*   Updated: 2022/10/30 16:10:34 by faru          ########   odam.nl         */
+/*                                                        :::      ::::::::   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fra <fra@student.42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/10/25 03:04:19 by anonymous         #+#    #+#             */
+/*   Updated: 2022/11/30 00:50:50 by fra              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	*append_str(char *old, t_crs *crs, size_t start)
 	while (old && old[len_old])
 		len_old++;
 	len_right = crs->pos - start;
-	if (! (len_old + len_right))
+	if (! len_right)
 		return (NULL);
 	new_str = (char *) malloc((len_old + len_right + 1) * sizeof(char));
 	crs->error = (crs->error || ! new_str);
@@ -87,7 +87,7 @@ int	fill_buffer(t_crs *crs)
 		crs->eof = chars_read == 0;
 		crs->buffer[chars_read] = '\0';
 		crs->pos = 0;
-		crs->reload = ! (chars_read > 0);
+		crs->reload = chars_read <= 0;
 	}
 	return (1);
 }
