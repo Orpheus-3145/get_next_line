@@ -5,13 +5,14 @@
 /*                                                     +:+                    */
 /*   By: anonymous <anonymous@student.codam.nl>       +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/10/19 01:16:32 by anonymous     #+#    #+#                 */
-/*   Updated: 2022/11/04 17:58:23 by faru          ########   odam.nl         */
+/*   Created: 2022/10/24 20:37:18 by anonymous     #+#    #+#                 */
+/*   Updated: 2022/12/03 00:19:57 by anonymous     ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -29,9 +30,9 @@ typedef struct s_crs
 	int				fd;
 	int				eof;
 	int				reload;
+	int				error;
+	struct s_crs	*next;
 }	t_crs;
-
-char	*get_next_line(int fd);
 
 t_crs	*allocate_cursor(int fd);
 
@@ -42,5 +43,15 @@ char	*append_str(char *left, t_crs *crs, size_t start);
 int		fill_buffer(t_crs *crs);
 
 char	*read_line(t_crs *crs);
+
+char	*get_next_line(int fd);
+
+void	free_crs_list(t_crs **crs_lst);
+
+t_crs	*append_crs(t_crs *list, int fd);
+
+t_crs	*get_crs_from_fd(t_crs *crs_list, int fd);
+
+void	check_crs_to_free(t_crs **list);
 
 #endif
