@@ -34,10 +34,12 @@ RESET = \x1b[0m
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(HEADER)
+$(NAME): $(OBJ_DIR) $(OBJS) $(HEADER)
 	@ar $(LFLAGS) $(NAME) $(OBJS)
 	@printf "$(GREEN)created archive $(NAME)$(RESET)\n"
 
+$(OBJ_DIR)
+	@mkdir $(OBJ_DIR)
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) $(IFLAGS) -c $^ -o $@
 	@printf "$(BLUE)Created object file $@\n"
